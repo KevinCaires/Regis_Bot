@@ -5,7 +5,6 @@ from discord.ext import commands
 
 client = commands.Bot(command_prefix='r/')
 
-
 @client.event
 async def on_ready():
     print("Let's to work!")
@@ -37,7 +36,7 @@ async def perfil(bot, usr=None):
     Visualisar perfil do jogador e seu personagem!
     """
     if not usr:
-        return await bot.send(f'{bot.author} por favor informe o @NickUser')
+        return await bot.send(f'{bot.author} por favor informe o @NickName')
     else:
         return await bot.send(f'''Nick:{usr}
 Ranking: Imagine um número
@@ -58,5 +57,5 @@ Para verificar o perfil de um(a) jogador(a) basta dar o comando: r/perfil @NickN
     
 Caso precise de uma ajuda que não esteja nesse tópico entre em contato com a equipe de desenvolvedores. Eles poderão lhe dar mais informações!
     
-o/
+Epero ter ajudado o/
     ''')
