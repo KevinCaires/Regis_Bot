@@ -16,11 +16,19 @@ async def cadastrar(bot, usr=None):
     """
     Use registrar para adicionar novos jogadores no server!
     """
-    author = '<@!' + str(bot.author.id) + '>'
-    if not usr or usr != author:
-        return await bot.send(f'{bot.author} por favor fornecer o @NickUser correto!')
+    if not usr:
+        return await bot.send(f'{bot.author} o comando não pode ser vazio!')
+
+    is_pc = True if usr[2] == '!' else False
+    if is_pc:
+        author = '<@!' + str(bot.author.id) + '>'
     else:
-        return await bot.send(f'{bot.author} adicionou {usr} no server!')
+        author = '<@' + str(bot.author.id) + '>'
+
+    if author != usr:
+        return await bot.send(f'{bot.author} por favor fornecer o @SeuNickName correto!')
+    else:
+        return await bot.send(f'O usuário {usr} foi cadastrado')
 
 
 @client.command()
