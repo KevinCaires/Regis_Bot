@@ -1,5 +1,9 @@
 import discord
 from discord.ext import commands
+from settings import API_URL
+from utils import get_gql_client
+from queries import get_profile
+from mutations import set_player
 
 # Ultima edição feita por @Grievon
 
@@ -15,6 +19,7 @@ async def cadastrar(bot, usr=None):
     """
     Use registrar para adicionar novos jogadores no server!
     """
+
     if not usr:
         return await bot.send(f'{bot.author} o comando não pode ser vazio!')
 
@@ -27,6 +32,15 @@ async def cadastrar(bot, usr=None):
     if author != usr:
         return await bot.send(f'{bot.author} por favor fornecer o @SeuNickName correto!')
     else:
+
+        if usr[2] != '!':
+            p1, p2 = usr[:2], usr[2:]
+            usr = f'{p1}!{p2}'
+
+        payload = set_player(usr)
+        api_client = get_gql_client(API_URL)
+        response = api_client.execute(payload)
+        print(response)
         return await bot.send(f'O usuário {usr} foi cadastrado')
 
 
@@ -35,13 +49,12 @@ async def perfil(bot, usr=None):
     """
     Visualisar perfil do jogador e seu personagem!
     """
+
     if not usr:
         return await bot.send(f'{bot.author} por favor informe o @NickName')
     else:
+
         return await bot.send(f'''Nick:{usr}
-Ranking: Imagine um número
-Vitórias: Imagine outro número
-Derrotas: Imagine mais um número
 ''')
 
 
@@ -59,3 +72,11 @@ Caso precise de uma ajuda que não esteja nesse tópico entre em contato com a e
     
 Epero ter ajudado o/
     ''')
+
+
+@client.command()
+async def teste(bot, usr):
+
+
+    print(usr)
+    return await bot.send(usr)
